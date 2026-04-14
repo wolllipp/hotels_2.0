@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="003-insert-sample-hotels" author="developer">
+        <insert tableName="hotels">
+            <column name="id" value="1"/>
+            <column name="name" value="DoubleTree by Hilton Minsk"/>
+            <column name="description" value="The DoubleTree by Hilton Hotel Minsk offers 193 luxurious rooms in the Belorussian capital and stunning views of Minsk city from the hotel's 20th floor ..."/>
+            <column name="brand" value="Hilton"/>
+            <column name="house_number" value="9"/>
+            <column name="street" value="Pobediteley Avenue"/>
+            <column name="city" value="Minsk"/>
+            <column name="country" value="Belarus"/>
+            <column name="post_code" value="220004"/>
+            <column name="phone" value="+375 17 309-80-00"/>
+            <column name="email" value="doubletreeminsk.info@hilton.com"/>
+            <column name="check_in" value="14:00"/>
+            <column name="check_out" value="12:00"/>
+        </insert>
+
+        <insert tableName="hotel_amenities">
+            <column name="hotel_id" value="1"/>
+            <column name="amenity" value="Free parking"/>
+        </insert>
+        <insert tableName="hotel_amenities">
+            <column name="hotel_id" value="1"/>
+            <column name="amenity" value="Free WiFi"/>
+        </insert>
+        <insert tableName="hotel_amenities">
+            <column name="hotel_id" value="1"/>
+            <column name="amenity" value="Non-smoking rooms"/>
+        </insert>
+        <insert tableName="hotel_amenities">
+            <column name="hotel_id" value="1"/>
+            <column name="amenity" value="Concierge"/>
+        </insert>
+        <insert tableName="hotel_amenities">
+            <column name="hotel_id" value="1"/>
+            <column name="amenity" value="On-site restaurant"/>
+        </insert>
+        <insert tableName="hotel_amenities">
+            <column name="hotel_id" value="1"/>
+            <column name="amenity" value="Fitness center"/>
+        </insert>
+
+        <insert tableName="hotels">
+            <column name="id" value="2"/>
+            <column name="name" value="Renaissance Minsk Hotel"/>
+            <column name="description" value="The Renaissance Minsk Hotel is a premium hotel located in the heart of the city center with modern amenities."/>
+            <column name="brand" value="Marriott"/>
+            <column name="house_number" value="1"/>
+            <column name="street" value="Dzerzhinsky Avenue"/>
+            <column name="city" value="Minsk"/>
+            <column name="country" value="Belarus"/>
+            <column name="post_code" value="220005"/>
+            <column name="phone" value="+375 17 309-90-00"/>
+            <column name="email" value="renaissance.minsk@marriott.com"/>
+            <column name="check_in" value="15:00"/>
+            <column name="check_out" value="11:00"/>
+        </insert>
+
+        <insert tableName="hotel_amenities">
+            <column name="hotel_id" value="2"/>
+            <column name="amenity" value="Free WiFi"/>
+        </insert>
+        <insert tableName="hotel_amenities">
+            <column name="hotel_id" value="2"/>
+            <column name="amenity" value="Non-smoking rooms"/>
+        </insert>
+        <insert tableName="hotel_amenities">
+            <column name="hotel_id" value="2"/>
+            <column name="amenity" value="Fitness center"/>
+        </insert>
+        <insert tableName="hotel_amenities">
+            <column name="hotel_id" value="2"/>
+            <column name="amenity" value="Room service"/>
+        </insert>
+
+        <insert tableName="hotels">
+            <column name="id" value="3"/>
+            <column name="name" value="Moscow Marriott Grand Hotel"/>
+            <column name="description" value="A luxury hotel in Moscow offering premium services and centrally located."/>
+            <column name="brand" value="Marriott"/>
+            <column name="house_number" value="26"/>
+            <column name="street" value="Tverskaya Street"/>
+            <column name="city" value="Moscow"/>
+            <column name="country" value="Russia"/>
+            <column name="post_code" value="125009"/>
+            <column name="phone" value="+7 495 937-00-00"/>
+            <column name="email" value="moscow.grand@marriott.com"/>
+            <column name="check_in" value="14:00"/>
+            <column name="check_out" value="12:00"/>
+        </insert>
+
+        <insert tableName="hotel_amenities">
+            <column name="hotel_id" value="3"/>
+            <column name="amenity" value="Free parking"/>
+        </insert>
+        <insert tableName="hotel_amenities">
+            <column name="hotel_id" value="3"/>
+            <column name="amenity" value="Free WiFi"/>
+        </insert>
+        <insert tableName="hotel_amenities">
+            <column name="hotel_id" value="3"/>
+            <column name="amenity" value="Business center"/>
+        </insert>
+        <insert tableName="hotel_amenities">
+            <column name="hotel_id" value="3"/>
+            <column name="amenity" value="Meeting rooms"/>
+        </insert>
+        <sql>ALTER SEQUENCE hotel_seq RESTART WITH 4;</sql>
+    </changeSet>
+
+</databaseChangeLog>
