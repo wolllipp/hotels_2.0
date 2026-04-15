@@ -4,7 +4,6 @@ import com.example.hotelapi.dto.*;
 import com.example.hotelapi.entity.Hotel;
 import com.example.hotelapi.repository.HotelRepository;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,12 +13,16 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class HotelServiceImpl implements HotelService {
 
     private final HotelRepository hotelRepository;
     private final HotelMapper hotelMapper;
+
+    public HotelServiceImpl(HotelRepository hotelRepository, HotelMapper hotelMapper) {
+        this.hotelRepository = hotelRepository;
+        this.hotelMapper = hotelMapper;
+    }
 
     @Override
     public List<HotelShortDto> getAllHotels() {

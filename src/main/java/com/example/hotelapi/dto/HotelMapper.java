@@ -6,94 +6,85 @@ import com.example.hotelapi.entity.Contacts;
 import com.example.hotelapi.entity.Hotel;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+
 @Component
 public class HotelMapper {
 
     public HotelShortDto toShortDto(Hotel hotel) {
-        return HotelShortDto.builder()
-                .id(hotel.getId())
-                .name(hotel.getName())
-                .description(hotel.getDescription())
-                .address(hotel.getAddress() != null ? hotel.getAddress().toShortAddress() : null)
-                .phone(hotel.getContacts() != null ? hotel.getContacts().getPhone() : null)
-                .build();
+        HotelShortDto dto = new HotelShortDto();
+        dto.setId(hotel.getId());
+        dto.setName(hotel.getName());
+        dto.setDescription(hotel.getDescription());
+        dto.setAddress(hotel.getAddress() != null ? hotel.getAddress().toShortAddress() : null);
+        dto.setPhone(hotel.getContacts() != null ? hotel.getContacts().getPhone() : null);
+        return dto;
     }
 
     public HotelDetailDto toDetailDto(Hotel hotel) {
-        return HotelDetailDto.builder()
-                .id(hotel.getId())
-                .name(hotel.getName())
-                .description(hotel.getDescription())
-                .brand(hotel.getBrand())
-                .address(toAddressDto(hotel.getAddress()))
-                .contacts(toContactsDto(hotel.getContacts()))
-                .arrivalTime(toArrivalTimeDto(hotel.getArrivalTime()))
-                .amenities(hotel.getAmenities())
-                .build();
+        HotelDetailDto dto = new HotelDetailDto();
+        dto.setId(hotel.getId());
+        dto.setName(hotel.getName());
+        dto.setDescription(hotel.getDescription());
+        dto.setBrand(hotel.getBrand());
+        dto.setAddress(toAddressDto(hotel.getAddress()));
+        dto.setContacts(toContactsDto(hotel.getContacts()));
+        dto.setArrivalTime(toArrivalTimeDto(hotel.getArrivalTime()));
+        dto.setAmenities(hotel.getAmenities());
+        return dto;
     }
 
     public Hotel toEntity(HotelCreateDto dto) {
-        return Hotel.builder()
-                .name(dto.getName())
-                .description(dto.getDescription())
-                .brand(dto.getBrand())
-                .address(toAddress(dto.getAddress()))
-                .contacts(toContacts(dto.getContacts()))
-                .arrivalTime(toArrivalTime(dto.getArrivalTime()))
-                .build();
+        Hotel hotel = new Hotel();
+        hotel.setName(dto.getName());
+        hotel.setDescription(dto.getDescription());
+        hotel.setBrand(dto.getBrand());
+        hotel.setAddress(toAddress(dto.getAddress()));
+        hotel.setContacts(toContacts(dto.getContacts()));
+        hotel.setArrivalTime(toArrivalTime(dto.getArrivalTime()));
+        hotel.setAmenities(new ArrayList<>());
+        return hotel;
     }
 
     private AddressDto toAddressDto(Address address) {
         if (address == null) return null;
-        return AddressDto.builder()
-                .houseNumber(address.getHouseNumber())
-                .street(address.getStreet())
-                .city(address.getCity())
-                .country(address.getCountry())
-                .postCode(address.getPostCode())
-                .build();
+        AddressDto dto = new AddressDto();
+        dto.setHouseNumber(address.getHouseNumber());
+        dto.setStreet(address.getStreet());
+        dto.setCity(address.getCity());
+        dto.setCountry(address.getCountry());
+        dto.setPostCode(address.getPostCode());
+        return dto;
     }
 
     private ContactsDto toContactsDto(Contacts contacts) {
         if (contacts == null) return null;
-        return ContactsDto.builder()
-                .phone(contacts.getPhone())
-                .email(contacts.getEmail())
-                .build();
+        ContactsDto dto = new ContactsDto();
+        dto.setPhone(contacts.getPhone());
+        dto.setEmail(contacts.getEmail());
+        return dto;
     }
 
     private ArrivalTimeDto toArrivalTimeDto(ArrivalTime arrivalTime) {
         if (arrivalTime == null) return null;
-        return ArrivalTimeDto.builder()
-                .checkIn(arrivalTime.getCheckIn())
-                .checkOut(arrivalTime.getCheckOut())
-                .build();
+        ArrivalTimeDto dto = new ArrivalTimeDto();
+        dto.setCheckIn(arrivalTime.getCheckIn());
+        dto.setCheckOut(arrivalTime.getCheckOut());
+        return dto;
     }
 
     private Address toAddress(AddressDto dto) {
         if (dto == null) return null;
-        return Address.builder()
-                .houseNumber(dto.getHouseNumber())
-                .street(dto.getStreet())
-                .city(dto.getCity())
-                .country(dto.getCountry())
-                .postCode(dto.getPostCode())
-                .build();
+        return new Address(dto.getHouseNumber(), dto.getStreet(), dto.getCity(), dto.getCountry(), dto.getPostCode());
     }
 
     private Contacts toContacts(ContactsDto dto) {
         if (dto == null) return null;
-        return Contacts.builder()
-                .phone(dto.getPhone())
-                .email(dto.getEmail())
-                .build();
+        return new Contacts(dto.getPhone(), dto.getEmail());
     }
 
     private ArrivalTime toArrivalTime(ArrivalTimeDto dto) {
         if (dto == null) return null;
-        return ArrivalTime.builder()
-                .checkIn(dto.getCheckIn())
-                .checkOut(dto.getCheckOut())
-                .build();
+        return new ArrivalTime(dto.getCheckIn(), dto.getCheckOut());
     }
 }

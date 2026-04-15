@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,11 +15,14 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/property-view")
-@RequiredArgsConstructor
 @Tag(name = "Hotel API", description = "Operations for managing hotels")
 public class HotelController {
 
     private final HotelService hotelService;
+
+    public HotelController(HotelService hotelService) {
+        this.hotelService = hotelService;
+    }
 
     @GetMapping("/hotels")
     @Operation(summary = "Get all hotels", description = "Returns a list of all hotels with short information")

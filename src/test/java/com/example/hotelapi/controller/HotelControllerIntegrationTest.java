@@ -57,26 +57,14 @@ class HotelControllerIntegrationTest {
 
     @Test
     void createHotel_shouldReturnShortDto() throws Exception {
-        HotelCreateDto dto = HotelCreateDto.builder()
-                .name("Test Hotel")
-                .description("A test hotel")
-                .brand("TestBrand")
-                .address(AddressDto.builder()
-                        .houseNumber(10)
-                        .street("Test Street")
-                        .city("TestCity")
-                        .country("TestCountry")
-                        .postCode("12345")
-                        .build())
-                .contacts(ContactsDto.builder()
-                        .phone("+1 234 567-89-00")
-                        .email("test@test.com")
-                        .build())
-                .arrivalTime(ArrivalTimeDto.builder()
-                        .checkIn("15:00")
-                        .checkOut("11:00")
-                        .build())
-                .build();
+        HotelCreateDto dto = new HotelCreateDto(
+                "Test Hotel",
+                "A test hotel",
+                "TestBrand",
+                new AddressDto(10, "Test Street", "TestCity", "TestCountry", "12345"),
+                new ContactsDto("+1 234 567-89-00", "test@test.com"),
+                new ArrivalTimeDto("15:00", "11:00")
+        );
 
         mockMvc.perform(post("/property-view/hotels")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -90,9 +78,8 @@ class HotelControllerIntegrationTest {
 
     @Test
     void createHotel_invalidData_shouldReturn400() throws Exception {
-        HotelCreateDto dto = HotelCreateDto.builder()
-                .name("")
-                .build();
+        HotelCreateDto dto = new HotelCreateDto();
+        dto.setName("");
 
         mockMvc.perform(post("/property-view/hotels")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -122,6 +109,25 @@ class HotelControllerIntegrationTest {
     @Test
     void searchHotels_byBrand_shouldReturnFiltered() throws Exception {
         mockMvc.perform(get("/property-view/search")
+                        .param("brand", "Hilton"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(1))));
+    }
+
+    @Test
+    void searchHotels_byAmenities_shouldReturnFiltered() throws Exception {
+        mockMvc.perform(get("/property-view/search")
+                        .param("amenities", "Free WiFi"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(1))))
+                .andExpect(jsonPath("$[0].id").exists())
+                .andExpect(jsonPath("$[0].name").exists());
+    }
+
+    @Test
+    void searchHotels_multipleParams_shouldReturnFiltered() throws Exception {
+        mockMvc.perform(get("/property-view/search")
+                        .param("city", "Minsk")
                         .param("brand", "Hilton"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(1))));
